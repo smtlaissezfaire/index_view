@@ -122,10 +122,6 @@ class IndexView
       ActiveRecord::Base.send(:sanitize_sql, sql)
     end
   
-    def new_column(*params)
-      Column.new(*params)
-    end
-  
     def given_sort_direction
       if direction = @params[:direction]
         direction.upcase.to_sym
