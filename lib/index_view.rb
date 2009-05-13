@@ -8,9 +8,9 @@ class IndexView
   include Implementation
   include CustomizationDefaults
 
-  ASC  = :ASC
-  DESC = :DESC
-  SORT_DIRECTIONS = [ASC, DESC]
+  ASC                       = :ASC
+  DESC                      = :DESC
+  SORT_DIRECTIONS           = [ASC, DESC]
   DEFAULT_PAGINATION_NUMBER = 30
 
   class InvalidSort < StandardError; end
