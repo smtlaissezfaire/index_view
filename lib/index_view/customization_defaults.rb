@@ -1,6 +1,8 @@
-class IndexView
+module IndexView
   # The following methods are safe to override in descendent classes
   module CustomizationDefaults
+    DEFAULT_PAGINATION_NUMBER = 30
+    
     def target_class
       raise NotImplementedError
     end
@@ -26,7 +28,7 @@ class IndexView
     end
 
     def default_sort_direction
-      DESC
+      Implementation::DESC
     end
 
     def fields_for_search

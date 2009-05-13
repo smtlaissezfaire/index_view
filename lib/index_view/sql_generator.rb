@@ -1,4 +1,4 @@
-class IndexView
+module IndexView
   module SQLGenerator
     def like_for_many_columns(value, *fields)
       [

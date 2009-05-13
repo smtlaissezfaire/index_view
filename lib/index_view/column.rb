@@ -1,4 +1,4 @@
-class IndexView
+module IndexView
   class Column
     class InvalidKeyError < StandardError; end
 

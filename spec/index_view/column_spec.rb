@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 
-class IndexView
+module IndexView
   describe Column do
     it "should init with a column name" do
       Column.new(:foo).column_name.should == :foo

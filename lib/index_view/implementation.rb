@@ -1,6 +1,10 @@
-class IndexView
+module IndexView
   module Implementation
     include SQLConditions
+    
+    ASC                       = :ASC
+    DESC                      = :DESC
+    SORT_DIRECTIONS           = [ASC, DESC]
     
     attr_reader :params
 

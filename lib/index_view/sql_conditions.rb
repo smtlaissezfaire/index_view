@@ -1,4 +1,4 @@
-class IndexView
+module IndexView
   module SQLConditions
     include SQLGenerator
   
