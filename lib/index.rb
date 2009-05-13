@@ -1,3 +1,6 @@
+require File.dirname(__FILE__) + "/index/implementation"
+require File.dirname(__FILE__) + "/index/customization_defaults"
+
 class Index
   include Implementation
   include CustomizationDefaults
