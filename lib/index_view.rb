@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + "/index/implementation"
-require File.dirname(__FILE__) + "/index/customization_defaults"
+require File.dirname(__FILE__) + "/index_view/implementation"
+require File.dirname(__FILE__) + "/index_view/customization_defaults"
 
-class Index
+class IndexView
   include Implementation
   include CustomizationDefaults
 

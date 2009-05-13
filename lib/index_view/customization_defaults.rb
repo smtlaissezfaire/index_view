@@ -1,4 +1,4 @@
-class Index
+class IndexView
   # The following methods are safe to override in descendent classes
   module CustomizationDefaults
     def target_class

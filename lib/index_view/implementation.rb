@@ -1,5 +1,4 @@
-
-class Index
+class IndexView
   module Implementation
     attr_reader :params
 
