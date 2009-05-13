@@ -1,5 +1,7 @@
 class IndexView
   module Implementation
+    include SQLConditions
+    
     attr_reader :params
 
     def initialize(params = { })
@@ -131,25 +133,5 @@ class IndexView
         default_sort_direction
       end
     end
-
-    module SQLConditions
-      include SQLGenerator
-      
-    private
-      
-      def state_conditions
-        if state?
-          ["state = ?", state]
-        end
-      end
-
-      def search_conditions
-        if search_term?
-          like_for_many_columns(search_term, *fields_for_search)
-        end
-      end
-    end
-
-    include SQLConditions
   end
 end
