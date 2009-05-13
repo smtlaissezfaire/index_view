@@ -133,8 +133,10 @@ class IndexView
     end
 
     module SQLConditions
+      include SQLGenerator
       
     private
+      
       def state_conditions
         if state?
           ["state = ?", state]
@@ -143,12 +145,11 @@ class IndexView
 
       def search_conditions
         if search_term?
-          SQLGenerator.like_for_many_columns(search_term, *fields_for_search)        
+          like_for_many_columns(search_term, *fields_for_search)
         end
       end
     end
 
     include SQLConditions
-
   end
 end
