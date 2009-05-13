@@ -209,5 +209,37 @@ module IndexView
         User.table_name.should == "users"
       end
     end
+    
+    describe "sorts" do
+      class UserIndex < IndexView::Base; end
+      
+      it "should raise an error if the sort is = 'foo'" do
+        @index = UserIndex.new({ :direction => "foo" })
+        
+        lambda {
+          @index.sort_direction
+        }.should raise_error(IndexView::InvalidSort, "FOO is not a valid sort direction")
+      end
+
+      it "should have the sort as 'ASC' when given 'asc'" do
+        @index = UserIndex.new({ :direction => "asc" })
+        @index.sort_direction.should == :ASC
+      end
+
+      it "should have the sort as 'DESC' when given 'desc'" do
+        @index = UserIndex.new({ :direction => "desc" })
+        @index.sort_direction.should == :DESC
+      end
+      
+      it "should have ASC as the opposite sort order of DESC" do
+        @index = UserIndex.new({ :direction => "DESC" })
+        @index.opposite_sort_direction.should == :ASC
+      end
+
+      it "should have DESC as the opposite sort order of ASC" do
+        @index = UserIndex.new({ :direction => "ASC" })
+        @index.opposite_sort_direction.should == :DESC
+      end
+    end
   end
 end

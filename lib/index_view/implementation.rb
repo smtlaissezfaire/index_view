@@ -62,7 +62,7 @@ module IndexView
       if SORT_DIRECTIONS.include?(given_sort_direction)
         given_sort_direction
       else
-        raise InvalidSort, "#{given_sort_direction} is not a valid sort direction"
+        raise IndexView::InvalidSort, "#{given_sort_direction} is not a valid sort direction"
       end
     end
   

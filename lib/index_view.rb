@@ -5,11 +5,11 @@ require File.dirname(__FILE__) + "/index_view/implementation"
 require File.dirname(__FILE__) + "/index_view/customization_defaults"
 
 module IndexView
+  class InvalidSort < StandardError; end
+  
   class Base
     include Implementation
     include CustomizationDefaults
-
-    class InvalidSort < StandardError; end
 
     class << self
       def find(*args)
