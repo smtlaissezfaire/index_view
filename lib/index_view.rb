@@ -1,3 +1,4 @@
+require File.dirname(__FILE__) + "/index_view/column"
 require File.dirname(__FILE__) + "/index_view/sql_generator"
 require File.dirname(__FILE__) + "/index_view/sql_conditions"
 require File.dirname(__FILE__) + "/index_view/implementation"
