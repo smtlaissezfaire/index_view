@@ -73,6 +73,10 @@ module IndexView
     def columns
       self.class.columns
     end
+
+    def sorting?(column_name)
+      sort_term.to_s == column_name.to_s
+    end
   
     def ascending?
       sort_direction == ASC
