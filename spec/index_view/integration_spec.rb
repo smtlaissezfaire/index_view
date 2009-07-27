@@ -5,6 +5,8 @@ class UserIndex < IndexView::Base
          :title => "First Name"
   column :last_name,
          :title => "Last Name"
+  column :email,
+         :link => lambda { |obj| "<a mailto:#{obj.email}>me</a>" }
   
   def target_class
     User
@@ -33,6 +35,15 @@ describe IndexView, "integration" do
   end
   
   it "should have the index column titles" do
-    @index.columns.map { |r| r.title }.should == ["First Name", "Last Name"]
+    @index.columns.map { |r| r.title }.should == ["First Name", "Last Name", "Email"]
+  end
+  
+  it "should allow a proc as the link method" do
+    user = create_user(:email => "scott@railsnewbie.com")
+    @row = UserIndex.find(:first)
+    
+    column = UserIndex.columns.detect { |c| c.column_name == :email }
+    
+    column.column_value(self, user).should == "<a mailto:scott@railsnewbie.com>me</a>"
   end
 end
