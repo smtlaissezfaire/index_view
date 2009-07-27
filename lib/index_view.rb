@@ -23,6 +23,11 @@ module IndexView
       def columns
         @columns ||= []
       end
+      
+      def fields_for_search
+        searchable_columns = columns.select { |c| c.searchable? }
+        searchable_columns.map { |col| col.column_name }
+      end
     end
   end
 end

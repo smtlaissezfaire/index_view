@@ -2,7 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
 
 class UserIndex < IndexView::Base
   column :first_name,
-         :title => "First Name"
+         :title => "First Name",
+         :searchable => true
   column :last_name,
          :title => "Last Name"
   column :email,
@@ -45,5 +46,9 @@ describe IndexView, "integration" do
     column = UserIndex.columns.detect { |c| c.column_name == :email }
     
     column.column_value(self, user).should == "<a mailto:scott@railsnewbie.com>me</a>"
+  end
+  
+  it "should add a column with :searchable => true as a field for search" do
+    @index.fields_for_search.should == [:first_name]
   end
 end

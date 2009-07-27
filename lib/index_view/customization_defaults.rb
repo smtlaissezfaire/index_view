@@ -30,9 +30,5 @@ module IndexView
     def default_sort_direction
       Implementation::DESC
     end
-
-    def fields_for_search
-      []
-    end
   end
 end

@@ -2,7 +2,7 @@ module IndexView
   class Column
     class InvalidKeyError < StandardError; end
 
-    OPTION_KEYS = [:link, :sortable, :title]
+    OPTION_KEYS = [:link, :sortable, :title, :searchable]
 
     def initialize(column_name, options={ })
       @column_name = column_name.to_sym
@@ -31,6 +31,10 @@ module IndexView
 
     def title
       @title ? @title : human_name
+    end
+    
+    def searchable?
+      @searchable ? true : false
     end
 
   private

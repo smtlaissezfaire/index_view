@@ -31,13 +31,13 @@ module IndexView
     it "should raise an error if an invalid key is given" do
       lambda {
         Column.new(:foo, :foo => :bar)
-      }.should raise_error(Column::InvalidKeyError, "foo is not a valid key.  Valid keys are [:link, :sortable, :title]")
+      }.should raise_error(Column::InvalidKeyError, "foo is not a valid key.  Valid keys are [:link, :sortable, :title, :searchable]")
     end
 
     it "should should raise the error with the correct key name" do
       lambda {
         Column.new(:foo, :bar => :baz)
-      }.should raise_error(Column::InvalidKeyError, "bar is not a valid key.  Valid keys are [:link, :sortable, :title]")
+      }.should raise_error(Column::InvalidKeyError, "bar is not a valid key.  Valid keys are [:link, :sortable, :title, :searchable]")
     end
 
     describe "url" do
@@ -99,6 +99,20 @@ module IndexView
 
       it "should use the column title instead if specified" do
         Column.new(:foo_bar, :title => "FOO BAR").title.should == "FOO BAR"
+      end
+    end
+    
+    describe "searchable?" do
+      it "should be true when passed :searchable => true" do
+        Column.new(:foo_bar, :searchable => true).should be_searchable
+      end
+      
+      it "should be false when passed :searchable => false" do
+        Column.new(:foo_bar, :searchable => false).should_not be_searchable
+      end
+      
+      it "should be false by default" do
+        Column.new(:foo_bar).should_not be_searchable
       end
     end
   end

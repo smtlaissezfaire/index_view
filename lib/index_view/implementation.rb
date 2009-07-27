@@ -94,6 +94,10 @@ module IndexView
       @params[:state]
     end
     
+    def fields_for_search
+      self.class.fields_for_search
+    end
+    
   private
 
     def conditions_sql
