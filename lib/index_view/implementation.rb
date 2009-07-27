@@ -123,7 +123,9 @@ module IndexView
     end
 
     def sanitize_sql(sql)
-      ActiveRecord::Base.send(:sanitize_sql, sql)
+      use_class do |target_class|
+        target_class.send(:sanitize_sql, sql)
+      end
     end
   
     def given_sort_direction
