@@ -13,26 +13,13 @@ module IndexView
     end
 
     def paginate
-      use_class do |klass|
-        klass.paginate pagination_options
-      end
+      target_class.paginate(pagination_options.merge(:from => table_name.to_s))
     end
   
-    def find(*args)
-      use_class do |klass|
-        klass.find(*args)
-      end
+    def find(selector, options={})
+      target_class.find(selector, options.merge(:from => table_name.to_s))
     end
 
-    def use_class
-      original_name = target_class.table_name
-
-      target_class.set_table_name(table_name.to_s)
-      yield target_class
-    ensure
-      target_class.set_table_name(original_name)
-    end
-  
     def pagination_options
       {
         :conditions => conditions_sql,
@@ -131,9 +118,7 @@ module IndexView
     end
 
     def sanitize_sql(sql)
-      use_class do |target_class|
-        target_class.send(:sanitize_sql, sql)
-      end
+      target_class.send(:sanitize_sql, sql)
     end
   
     def given_sort_direction

@@ -12,11 +12,9 @@ module IndexView
     end
 
     def per_page
-      use_class do |klass|
-        klass.respond_to?(:per_page) ?
-          klass.per_page :
-          DEFAULT_PAGINATION_NUMBER
-      end
+      target_class.respond_to?(:per_page) ?
+        target_class.per_page :
+        DEFAULT_PAGINATION_NUMBER
     end
 
     def default_sort_term
