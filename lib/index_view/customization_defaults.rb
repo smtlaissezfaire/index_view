@@ -2,13 +2,9 @@ module IndexView
   # The following methods are safe to override in descendent classes
   module CustomizationDefaults
     DEFAULT_PAGINATION_NUMBER = 30
-    
+
     def target_class
       raise NotImplementedError
-    end
-
-    def table_name
-      target_class.table_name.to_sym
     end
 
     def per_page

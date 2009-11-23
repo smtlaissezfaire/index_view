@@ -1,11 +1,11 @@
 module IndexView
   module Implementation
     include SQLConditions
-    
+
     ASC                       = :ASC
     DESC                      = :DESC
     SORT_DIRECTIONS           = [ASC, DESC]
-    
+
     attr_reader :params
 
     def initialize(params = { })
@@ -15,7 +15,7 @@ module IndexView
     def paginate
       target_class.paginate(pagination_options.merge(:from => table_name.to_s))
     end
-  
+
     def find(selector, options={})
       target_class.find(selector, options.merge(:from => table_name.to_s))
     end
@@ -28,23 +28,23 @@ module IndexView
         :per_page   => per_page
       }
     end
-  
+
     def search_term
       @params[:search]
     end
-  
+
     def search_term?
       search_term && !search_term.blank? ? true : false
     end
-  
+
     def sort
       "#{sort_term} #{sort_direction}" + (!secondary_sort_term.blank? ? ", #{secondary_sort_term} #{sort_direction}" : '')
     end
-  
+
     def sort_term
       @params[:sort] || default_sort_term
     end
-  
+
     def sort_direction
       if SORT_DIRECTIONS.include?(given_sort_direction)
         given_sort_direction
@@ -52,11 +52,11 @@ module IndexView
         raise IndexView::InvalidSort, "#{given_sort_direction} is not a valid sort direction"
       end
     end
-  
+
     def opposite_sort_direction
       ascending? ? DESC : ASC
     end
-  
+
     def columns
       self.class.columns
     end
@@ -64,11 +64,11 @@ module IndexView
     def sorting?(column_name)
       sort_term.to_s == column_name.to_s
     end
-  
+
     def ascending?
       sort_direction == ASC
     end
-  
+
     def descending?
       !ascending?
     end
@@ -80,11 +80,15 @@ module IndexView
     def state
       @params[:state]
     end
-    
+
     def fields_for_search
       self.class.fields_for_search
     end
-    
+
+    def table_name
+      target_class.table_name.to_sym
+    end
+
   private
 
     def conditions_sql
@@ -120,7 +124,7 @@ module IndexView
     def sanitize_sql(sql)
       target_class.send(:sanitize_sql, sql)
     end
-  
+
     def given_sort_direction
       if direction = @params[:direction]
         direction.upcase.to_sym
