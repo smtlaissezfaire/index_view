@@ -13,15 +13,16 @@ module IndexView
     end
 
     def paginate
-      target_class.paginate(pagination_options.merge(:from => table_name.to_s))
+      target_class.paginate(pagination_options)
     end
 
     def find(selector, options={})
-      target_class.find(selector, find_options.merge(options).merge(:from => table_name.to_s))
+      target_class.find(selector, find_options.merge(options))
     end
 
     def find_options
       {
+        :from       => table_name.to_s,
         :order      => sort,
         :conditions => conditions_sql
       }
@@ -29,6 +30,7 @@ module IndexView
 
     def pagination_options
       {
+        :from       => table_name.to_s,
         :conditions => conditions_sql,
         :order      => sort,
         :page       => @params[:page],
