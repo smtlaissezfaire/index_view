@@ -46,5 +46,15 @@ module IndexView
       User.should_receive(:find).with(:all, hash_including(:conditions => "(bar = 'baz')"))
       view.find(:all)
     end
+
+    it "should be able to find by id" do
+      User.should_receive(:find).with(1)
+      MockView.find(1)
+    end
+
+    it "should use the correct id when finding by id" do
+      User.should_receive(:find).with(2)
+      MockView.find(2)
+    end
   end
 end

@@ -17,7 +17,12 @@ module IndexView
     end
 
     def find(selector, options={})
-      target_class.find(selector, find_options.merge(options))
+      case selector
+      when :first, :last, :all
+        target_class.find(selector, find_options.merge(options))
+      else
+        target_class.find(selector)
+      end
     end
 
     def find_options
