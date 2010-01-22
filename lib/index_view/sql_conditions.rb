@@ -1,9 +1,9 @@
 module IndexView
   module SQLConditions
     include SQLGenerator
-  
+
   private
-  
+
     def state_conditions
       if state?
         ["state = ?", state]

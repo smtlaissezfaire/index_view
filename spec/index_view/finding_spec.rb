@@ -57,4 +57,60 @@ module IndexView
       MockView.find(2)
     end
   end
+
+  class SearchableView < IndexView::Base
+    column :first_name, :searchable => true
+
+    def target_class
+      User
+    end
+
+    def sort_term
+      :first_name
+    end
+
+    def sort_direction
+      "DESC"
+    end
+  end
+
+  describe "searching" do
+    before do
+      @params = {}
+      @controller = mock 'controller', :params => @params
+    end
+
+    it "should find an exact match against a searchable column" do
+      user = User.new
+      user.first_name = "scott"
+      user.save!
+
+      @params[:search] = "scott"
+
+      view = SearchableView.new(@params)
+      view.find(:all).should == [user]
+    end
+
+    it "should not find a user who doesn't match" do
+      user = User.new
+      user.first_name = "stephen"
+      user.save!
+
+      @params[:search] = "scott"
+
+      view = SearchableView.new(@params)
+      view.find(:all).should == []
+    end
+
+    it "should find a user who matches a like" do
+      user = User.new
+      user.first_name = "scott"
+      user.save!
+
+      @params[:search] = "cot"
+
+      view = SearchableView.new(@params)
+      view.find(:all).should == [user]
+    end
+  end
 end
