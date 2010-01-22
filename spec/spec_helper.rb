@@ -18,3 +18,9 @@ ActiveRecord::Schema.define do
 end
 
 class User < ActiveRecord::Base; end
+
+Spec::Runner.configure do |config|
+  config.before(:each) do
+    User.delete_all
+  end
+end
