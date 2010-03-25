@@ -88,6 +88,30 @@ module IndexView
             model.default_sort_term
           }.should raise_error(NotImplementedError)
         end
+
+        it "should sort by the default column" do
+          scott = User.new(:first_name => "Scott", :last_name => "Taylor")
+          bar = User.new(:first_name => "Foo",   :last_name => "Bar")
+
+          scott.save!
+          bar.save!
+
+          klass = Class.new(IndexView::Base) do
+            def default_sort_term
+              :last_name
+            end
+
+            def default_sort_direction
+              IndexView::Base::ASC
+            end
+
+            def target_class
+              User
+            end
+          end
+
+          klass.new.find(:all).should == [bar, scott]
+        end
       end
 
       describe "pagination" do
