@@ -13,7 +13,7 @@ module IndexView
       column.column_name.should equal(:foo)
     end
   end
-  
+
   describe Base do
     describe "defaults" do
       def new_mock_class
@@ -80,8 +80,17 @@ module IndexView
         end
       end
 
-      describe "pagination" do
+      describe "default_sort_term" do
+        it "should raise a NotImplementedError by default" do
+          model = new_index(User)
 
+          lambda {
+            model.default_sort_term
+          }.should raise_error(NotImplementedError)
+        end
+      end
+
+      describe "pagination" do
         before(:each) do
           ar_class = Class.new(ActiveRecord::Base) do
             set_table_name :submissions
@@ -140,13 +149,13 @@ module IndexView
         end
       end
     end
-    
+
     describe "sorts" do
       class UserIndex < IndexView::Base; end
-      
+
       it "should raise an error if the sort is = 'foo'" do
         @index = UserIndex.new({ :direction => "foo" })
-        
+
         lambda {
           @index.sort_direction
         }.should raise_error(IndexView::InvalidSort, "FOO is not a valid sort direction")
@@ -161,7 +170,7 @@ module IndexView
         @index = UserIndex.new({ :direction => "desc" })
         @index.sort_direction.should == :DESC
       end
-      
+
       it "should have ASC as the opposite sort order of DESC" do
         @index = UserIndex.new({ :direction => "DESC" })
         @index.opposite_sort_direction.should == :ASC
