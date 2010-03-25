@@ -101,16 +101,16 @@ module IndexView
         Column.new(:foo_bar, :title => "FOO BAR").title.should == "FOO BAR"
       end
     end
-    
+
     describe "searchable?" do
       it "should be true when passed :searchable => true" do
         Column.new(:foo_bar, :searchable => true).should be_searchable
       end
-      
+
       it "should be false when passed :searchable => false" do
         Column.new(:foo_bar, :searchable => false).should_not be_searchable
       end
-      
+
       it "should be false by default" do
         Column.new(:foo_bar).should_not be_searchable
       end

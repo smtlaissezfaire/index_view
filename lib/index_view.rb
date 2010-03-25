@@ -6,7 +6,7 @@ require File.dirname(__FILE__) + "/index_view/customization_defaults"
 
 module IndexView
   class InvalidSort < StandardError; end
-  
+
   class Base
     include Implementation
     include CustomizationDefaults
@@ -23,7 +23,7 @@ module IndexView
       def columns
         @columns ||= []
       end
-      
+
       def fields_for_search
         searchable_columns = columns.select { |c| c.searchable? }
         searchable_columns.map { |col| col.column_name }

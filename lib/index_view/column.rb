@@ -32,7 +32,7 @@ module IndexView
     def title
       @title ? @title : human_name
     end
-    
+
     def searchable?
       @searchable ? true : false
     end
