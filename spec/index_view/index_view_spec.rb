@@ -86,7 +86,7 @@ module IndexView
 
           lambda {
             model.default_sort_term
-          }.should raise_error(NotImplementedError)
+          }.should raise_error(NotImplementedError, "default_sort_term must be defined")
         end
 
         it "should sort by the default column" do

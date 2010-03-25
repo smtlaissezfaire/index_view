@@ -14,7 +14,7 @@ module IndexView
     end
 
     def default_sort_term
-      raise NotImplementedError
+      raise NotImplementedError, "default_sort_term must be defined"
     end
 
     def secondary_sort_term
