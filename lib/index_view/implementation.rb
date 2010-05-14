@@ -8,10 +8,15 @@ module IndexView
 
     attr_reader :params
 
+    # IndexView objects are initialized with the params of a request.
+    # See README.rdoc
     def initialize(params = { })
       @params = params
     end
 
+    # returns a paginated set of the IndexView's +target_class+
+    # To customize how the objects are paginated -
+    # redefine +pagination_options+ in your class
     def paginate
       target_class.paginate(pagination_options)
     end
@@ -33,6 +38,8 @@ module IndexView
       }
     end
 
+    # Returns a hash of options used to paginate your IndexView's +target_class+.
+    # You can overwrite this in your class to customize pagination.
     def pagination_options
       {
         :from       => table_name.to_s,
@@ -71,18 +78,23 @@ module IndexView
       ascending? ? DESC : ASC
     end
 
+    # returns a collection of the IndexView::Column objects that were
+    # added through the +column+ method
     def columns
       self.class.columns
     end
 
+    # Takes a column name and returns whether or not your index is currently sorted on that column.
     def sorting?(column_name)
       sort_term.to_s == column_name.to_s
     end
 
+    # Returns whether or not your index is currently sorted ascended.
     def ascending?
       sort_direction == ASC
     end
 
+    # Returns whether or not your index is currently sorted descended.
     def descending?
       !ascending?
     end

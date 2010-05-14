@@ -1,0 +1,50 @@
+= IndexView
+
+IndexViews are objects that  that are composed of models and also have methods to define
+how those models are presented in the view. They're ideal to use in admin sections of your application
+and make it lightning fast to handle:
+  * pagination
+  * column sorting
+  * searchability
+  * reusability and reusability
+
+  IMAGE TO AN INDEXVIEW IN THE WILD
+
+= Examples:
+
+== Defining an IndexView
+
+  class UsersIndex < IndexView::Base
+    column :email,
+           :sortable => true
+    column :time_zone
+    column :type,
+           :sortable => true
+
+    def target_class
+      User
+    end
+
+    def default_sort_term
+      :id
+    end
+
+    def default_sort_direction
+      :ASC
+    end
+  end
+
+== Using an IndexView in an action
+
+  class Admin::UsersController < Admin::ApplicationController
+
+    def index
+      @index = UsersIndex.new(params)
+      @users = @index.paginate
+    end
+
+  end
+
+When your index shows data from more than one model(For example: A User and all his comments) we find it helpful
+to either denormalize that information or make an ActiveRecord model backed
+by a view, not a a plain-old table - and use *that* class as your +target_class+.
