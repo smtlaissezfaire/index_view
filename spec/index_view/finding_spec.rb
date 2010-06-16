@@ -40,7 +40,7 @@ module IndexView
       MockView.find(:all)
     end
 
-    it "should in the sql conditions" do
+    it "should pass in the sql conditions" do
       view = MockView.new({:index => {:bar => "baz"}})
 
       User.should_receive(:find).with(:all, hash_including(:conditions => "(bar = 'baz')"))
