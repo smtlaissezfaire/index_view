@@ -14,7 +14,7 @@ module IndexView
     end
 
     def value_fields_for_like_with_many_columns(value, fields)
-      fields.map { "%#{value}%" }
+      fields.map { "%#{value.gsub(" ", "%")}%" }
     end
   end
 end

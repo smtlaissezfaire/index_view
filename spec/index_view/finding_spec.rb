@@ -112,5 +112,16 @@ module IndexView
       view = SearchableView.new(@params)
       view.find(:all).should == [user]
     end
+
+    it "should replace spaces with %'s" do
+      user = User.new
+      user.first_name = "scott      A"
+      user.save!
+
+      @params[:search] = "scott A"
+
+      view = SearchableView.new(@params)
+      view.find(:all).should == [user]
+    end
   end
 end
