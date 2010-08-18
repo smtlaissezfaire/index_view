@@ -61,6 +61,11 @@ module IndexView
       User.should_receive(:find).with(:all, {:order => "foo DESC", :from => "users_index", :conditions => ""}).and_return nil
       MockView.all
     end
+
+    it "should call find :first with .first" do
+      User.should_receive(:find).with(:first, {:order => "foo DESC", :from => "users_index", :conditions => ""}).and_return nil
+      MockView.first
+    end
   end
 
   class SearchableView < IndexView::Base

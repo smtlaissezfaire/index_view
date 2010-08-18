@@ -34,6 +34,10 @@ module IndexView
       find(:all, *args)
     end
 
+    def first(*args)
+      find(:first, *args)
+    end
+
     def find_options
       {
         :from       => table_name.to_s,
