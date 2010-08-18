@@ -112,6 +112,30 @@ module IndexView
 
           klass.new.find(:all).should == [bar, scott]
         end
+
+        it "should sort by two columns when an array is provided" do
+          scott  = User.new(:first_name => "Scott", :last_name => "Taylor")
+          scott2 = User.new(:first_name => "Scott", :last_name => "Barron")
+
+          scott.save!
+          scott2.save!
+
+          klass = Class.new(IndexView::Base) do
+            def default_sort_term
+              [:first_name, :last_name]
+            end
+
+            def default_sort_direction
+              IndexView::Base::ASC
+            end
+
+            def target_class
+              User
+            end
+          end
+
+          klass.new.find(:all).should == [scott2, scott]
+        end
       end
 
       describe "pagination" do

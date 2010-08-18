@@ -71,7 +71,11 @@ module IndexView
     end
 
     def sort_term
-      @params[:sort] || default_sort_term
+      if sort = @params[:sort]
+        sort
+      else
+        default_sort_term.is_a?(Array) ? default_sort_term.join(", ") : default_sort_term
+      end
     end
 
     def sort_direction
