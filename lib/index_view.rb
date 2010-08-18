@@ -5,6 +5,14 @@ require File.dirname(__FILE__) + "/index_view/implementation"
 require File.dirname(__FILE__) + "/index_view/customization_defaults"
 
 module IndexView
+  module Version
+    MAJOR = 0
+    MINOR = 1
+    TINY  = 0
+
+    STRING = "#{MAJOR}.#{MINOR}.#{TINY}"
+  end
+
   class InvalidSort < StandardError; end
 
   class Base
