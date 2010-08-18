@@ -11,14 +11,13 @@ module IndexView
     end
 
     attr_reader :column_name, :link
-    alias_method :link_method, :link
 
     def column_value(context, object)
-      context.instance_exec(object, &link_method)
+      context.instance_exec(object, &link)
     end
 
     def column_value?
-      link_method ? true : false
+      link ? true : false
     end
 
     def sortable?

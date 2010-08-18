@@ -11,21 +11,21 @@ module IndexView
     end
 
     it "should allow a link method as a lambda" do
-      link_method = lambda {
+      link = lambda {
         some_url
       }
 
-      column = Column.new(:foo, :link => link_method)
-      column.link_method.should == link_method
+      column = Column.new(:foo, :link => link)
+      column.link.should == link
     end
 
     it "should allow keys to be auto-symbolized" do
-      link_method = lambda {
+      link = lambda {
         some_url
       }
 
-      column = Column.new(:foo, "link" => link_method)
-      column.link_method.should == link_method
+      column = Column.new(:foo, "link" => link)
+      column.link.should == link
     end
 
     it "should raise an error if an invalid key is given" do
