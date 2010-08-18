@@ -48,3 +48,14 @@ and make it lightning fast to handle:
 When your index shows data from more than one model(For example: A User and all his comments) we find it helpful
 to either denormalize that information or make an ActiveRecord model backed
 by a view, not a a plain-old table - and use *that* class as your +target_class+.
+
+== Overriding a value
+
+Need to give something other than then the column value / method for a column?  Pass in a block
+and you'll get the record back:
+
+class UserIndex < IndexView::Base
+  column :name do |user|
+    "#{user.first_name} #{user.last_name}"
+  end
+end
