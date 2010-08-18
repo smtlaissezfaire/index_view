@@ -56,6 +56,11 @@ module IndexView
       User.should_receive(:find).with(2)
       MockView.find(2)
     end
+
+    it "should find with all + default actions" do
+      User.should_receive(:find).with(:all, {:order => "foo DESC", :from => "users_index", :conditions => ""}).and_return nil
+      MockView.all
+    end
   end
 
   class SearchableView < IndexView::Base

@@ -16,6 +16,10 @@ module IndexView
         new({ }).find(*args)
       end
 
+      def all(*args)
+        new({}).all(*args)
+      end
+
       # used to define columns you want to render in the view,
       # and gives you a way to customize _how_ they render
       # See IndexView::Column to get an idea of the options you can pass in.
