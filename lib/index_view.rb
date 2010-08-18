@@ -21,7 +21,7 @@ module IndexView
 
     class << self
       def find(*args)
-        new({ }).find(*args)
+        new({}).find(*args)
       end
 
       def all(*args)
