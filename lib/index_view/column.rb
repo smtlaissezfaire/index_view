@@ -4,10 +4,10 @@ module IndexView
 
     OPTION_KEYS = [:link, :sortable, :title, :searchable]
 
-    def initialize(column_name, options={ })
+    def initialize(column_name, options={ }, &link)
       @column_name = column_name.to_sym
 
-      check_and_assign_values_from_keys(options)
+      check_and_assign_values_from_keys(options, link)
     end
 
     attr_reader :column_name, :link
@@ -38,9 +38,13 @@ module IndexView
 
   private
 
-    def check_and_assign_values_from_keys(hash)
+    def check_and_assign_values_from_keys(hash, link)
       hash.each do |key, value|
         key = key.to_sym
+
+        if key == :link
+          Kernel.warn ":link is no longer a valid key.  Pass a block directly to the column method (from #{caller[5]})"
+        end
 
         if OPTION_KEYS.include?(key)
           assign_if_present(key, value)
@@ -49,6 +53,8 @@ module IndexView
           raise InvalidKeyError, "#{key} is not a valid key.  Valid keys are #{key_names}"
         end
       end
+
+      assign_if_present(:link, link)
     end
 
     def assign_if_present(key, value)

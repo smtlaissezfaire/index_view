@@ -11,6 +11,8 @@ module IndexView
     end
 
     it "should allow a link method as a lambda" do
+      Kernel.stub!(:warn)
+
       link = lambda {
         some_url
       }
@@ -19,13 +21,23 @@ module IndexView
       column.link.should == link
     end
 
-    it "should allow keys to be auto-symbolized" do
+    it "should raise a deprecation warning if receiving a :link key" do
+      Kernel.should_receive(:warn)
+      Column.new(:foo, :link => lambda {})
+    end
+
+    it "should allow a link method as a block" do
       link = lambda {
         some_url
       }
 
-      column = Column.new(:foo, "link" => link)
+      column = Column.new(:foo, &link)
       column.link.should == link
+    end
+
+    it "should allow keys to be auto-symbolized" do
+      column = Column.new(:foo, "title" => "foo")
+      column.title.should == "foo"
     end
 
     it "should raise an error if an invalid key is given" do
@@ -42,7 +54,9 @@ module IndexView
 
     describe "url" do
       before(:each) do
-        @column = Column.new(:foo, :link => lambda { some_link_url })
+        @column = Column.new(:foo) do
+          some_link_url
+        end
       end
 
       it "should evaluate the url in the environment given (not the one it's defined in)" do
@@ -65,10 +79,12 @@ module IndexView
 
       it 'should pass in the object given to the column value' do
         obj = Object.new
-        a_lambda = lambda { |obj| obj }
 
-        @column = Column.new(:foo, :link => a_lambda)
-        @column.column_value(self, obj).should == obj
+        column = Column.new(:foo) do
+          obj
+        end
+
+        column.column_value(self, obj).should == obj
       end
     end
 

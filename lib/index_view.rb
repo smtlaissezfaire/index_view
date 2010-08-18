@@ -27,8 +27,8 @@ module IndexView
       # used to define columns you want to render in the view,
       # and gives you a way to customize _how_ they render
       # See IndexView::Column to get an idea of the options you can pass in.
-      def column(*args)
-        columns << Column.new(*args)
+      def column(*args, &block)
+        columns << Column.new(*args, &block)
       end
 
       # returns a collection of the IndexView::Column objects that were
